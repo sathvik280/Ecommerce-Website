@@ -50,6 +50,11 @@ const Header1 = (props) => {
     };
 
     const logoutUser = () => {
+        if (isLoading)
+        {
+            return;
+        }
+        
         setIsLoading(true);
         saveUserCartAndOrderHistoryToDb('http://localhost:5000/user');
 
