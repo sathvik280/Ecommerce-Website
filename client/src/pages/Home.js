@@ -15,6 +15,7 @@ import { setUpProducts } from '../features/slice/productSlice';
 
 const Home = (props) => {
     const { token } = useSelector( (store) => store.auth);
+    const { isProductsFetched } = useSelector( (store) => store.product);
 
     const dispatch = useDispatch();
 
@@ -38,6 +39,11 @@ const Home = (props) => {
     };
 
     useEffect( () => {
+        if (isProductsFetched)
+        {
+            return;
+        }
+        
         fetchProducts('http://localhost:5000/product');
     }, []);
 
