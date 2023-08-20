@@ -12,6 +12,7 @@ import logo from '../assets/eco-logo.png';
 
 import { updateCartDetails } from '../features/slice/cartSlice';
 import { removeUser, removeToken } from '../features/slice/authSlice';
+import { removeProducts } from '../features/slice/productSlice';
 
 const Header1 = (props) => {
     const { pathname } = useLocation();
@@ -62,6 +63,7 @@ const Header1 = (props) => {
             navigate('/');
             setIsLoading(false);
 
+            dispatch(removeProducts());
             dispatch(removeUser());
             dispatch(removeToken());
         }, 1000);
