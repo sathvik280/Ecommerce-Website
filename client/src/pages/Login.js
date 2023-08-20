@@ -11,9 +11,11 @@ import { ImSpinner8 } from 'react-icons/im';
 import Header2 from '../components/Header2';
 
 const Login = (props) => {
-    let [email, setEmail] = useState('');
-    let [password, setPassword] = useState('');
-    let [message, setMessage] = useState('Enter your email and password');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('Enter your email and password');
+    const [emailShake, setEmailShake] = useState(false);
+    const [passwordShake, setPasswordShake] = useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -95,15 +97,39 @@ const Login = (props) => {
             return;
         }
 
-        if (email === '' || password === '')
+        if (email === '')
         {
+            setEmailShake(true);
             setMessage('Some of the feilds are empty');
+
+            setTimeout( () => {
+                setEmailShake(false);
+            }, 500);
+
             return;
         }
 
         if (!validateEmail())
         {
+            setEmailShake(true);
             setMessage('Invalid email address');
+
+            setTimeout( () => {
+                setEmailShake(false);
+            }, 500);
+            
+            return;
+        }
+
+        if (password === '')
+        {
+            setPasswordShake(true);
+            setMessage('Some of the feilds are empty');
+
+            setTimeout( () => {
+                setPasswordShake(false);
+            }, 500);
+
             return;
         }
 
@@ -138,7 +164,7 @@ const Login = (props) => {
                             setEmail(event.target.value.trim())
                         }}
                         spellCheck={false}
-                        className="focus:outline-none border-[1px] p-[10px] w-[85%] border-gray-400 rounded-md text-[#666666] placeholder:text-[#858585]"
+                        className={`focus:outline-none border-[1px] p-[10px] w-[85%] border-gray-400 rounded-md text-[#666666] placeholder:text-[#858585] ${emailShake ? "animate-shake" : "animate-none"}`}
                     />
 
                     <input 
@@ -149,7 +175,7 @@ const Login = (props) => {
                             setPassword(event.target.value.trim());
                         }}
                         spellCheck={false}
-                        className="focus:outline-none border-[1px] px-2 py-[10px] w-[85%] border-gray-400 rounded-md text-[#666666] placeholder:text-[#858585]"
+                        className={`focus:outline-none border-[1px] px-2 py-[10px] w-[85%] border-gray-400 rounded-md text-[#666666] placeholder:text-[#858585] ${passwordShake ? "animate-shake" : "animate-none"}`}
                     />
 
                     <button
